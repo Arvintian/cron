@@ -29,6 +29,9 @@ type DummyJob struct{}
 func (d DummyJob) Run() {
 	panic("YOLO")
 }
+func (d DummyJob) Identify() interface{} {
+	return nil
+}
 
 func TestJobPanicRecovery(t *testing.T) {
 	var job DummyJob
@@ -278,6 +281,9 @@ type testJob struct {
 
 func (t testJob) Run() {
 	t.wg.Done()
+}
+func (t testJob) Identify() interface{} {
+	return nil
 }
 
 // Simple test using Runnables.

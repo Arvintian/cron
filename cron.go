@@ -22,6 +22,7 @@ type Cron struct {
 
 // Job is an interface for submitted cron jobs.
 type Job interface {
+	Identify() interface{}
 	Run()
 }
 
@@ -90,6 +91,9 @@ func NewWithLocation(location *time.Location) *Cron {
 type FuncJob func()
 
 func (f FuncJob) Run() { f() }
+func (f FuncJob) Identify() interface{} {
+	return &f
+}
 
 // AddFunc adds a func to the Cron to be run on the given schedule.
 func (c *Cron) AddFunc(spec string, cmd func()) error {
